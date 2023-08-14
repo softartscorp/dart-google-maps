@@ -177,7 +177,12 @@ abstract class GMap extends MVCObject {
     void start() => mapsEventListener = Event.addListener(
           this,
           'click',
-          (IconMouseEvent event) => sc.add(event),
+          (IconMouseEvent event) {
+            sc.add(event);
+            if (event.placeId != null) {
+              event.stop();
+            }
+          },
         );
     void stop() => mapsEventListener.remove();
     sc = StreamController<IconMouseEvent>(
